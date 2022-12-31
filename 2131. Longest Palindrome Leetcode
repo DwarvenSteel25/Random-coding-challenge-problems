@@ -1,0 +1,38 @@
+public class Solution {
+    public int LongestPalindrome(string[] words) 
+    {
+        int count =0;
+        bool countSpecial = false;
+        int[,] alphaBox =new int[26,26];
+        for(int i = 0;i<words.Length;i++)
+        {
+            int first = words[i][0] - 97;
+            int second = words[i][1] - 97;
+            alphaBox[first,second]++;
+        }
+        for(int i = 0;i<26;i++)
+        {
+            for(int j = 0;j<26;j++)
+            {
+                if(i!=j||alphaBox[i,i]%2==0)
+                {
+                    count+= Math.Min(alphaBox[i,j],alphaBox[j,i])*2;
+                }
+                else 
+                {
+                    countSpecial=true;
+                    if(alphaBox[i,i]>1)
+                    {
+                        alphaBox[i,i]--;
+                        count+= Math.Min(alphaBox[i,j],alphaBox[j,i])*2;
+                    }
+                }
+            }
+        }
+        if(countSpecial==true)
+        {
+            count+=2;
+        }
+        return count;
+    }
+}
